@@ -68,6 +68,8 @@ const sampleConfig = `
     ## Custom patterns can also be defined here. Put one pattern per line.
     custom_patterns = '''
     '''
+    ## Log unmatched lines to telegraf log
+    log_unmatched_lines = false
 `
 
 func (l *LogParserPlugin) SampleConfig() string {

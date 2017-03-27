@@ -60,6 +60,7 @@ var (
 )
 
 type Parser struct {
+	LogUnmatchedLines bool
 	Patterns []string
 	// namedPatterns is a list of internally-assigned names to the patterns
 	// specified by the user in Patterns.
@@ -168,6 +169,9 @@ func (p *Parser) ParseLine(line string) (telegraf.Metric, error) {
 	}
 
 	if len(values) == 0 {
+		if p.LogUnmatchedLines {
+			log.Printf("I! No match to line: %s", line)
+		}
 		return nil, nil
 	}
 
