@@ -19,6 +19,10 @@ It is highly recommended that all users migrate to the new riemann output plugin
 - [#1900](https://github.com/influxdata/telegraf/pull/1900): Riemann plugin rewrite.
 - [#1453](https://github.com/influxdata/telegraf/pull/1453): diskio: add support for name templates and udev tags.
 - [#2277](https://github.com/influxdata/telegraf/pull/2277): add integer metrics for Consul check health state.
+- [#1413](https://github.com/influxdata/telegraf/issues/1413): Separate container_version from container_image tag.
+- [#1525](https://github.com/influxdata/telegraf/pull/1525): Support setting per-device and total metrics for Docker network and blockio.
+- [#1466](https://github.com/influxdata/telegraf/pull/1466): MongoDB input plugin: adding per DB stats from db.stats()
+- [#1562](https://github.com/influxdata/telegraf/pull/1562): uwsgi input plugin. thanks @OrangeTux and @blaggacao!
 
 ### Bugfixes
 
