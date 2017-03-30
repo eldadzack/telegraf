@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/influxdata/telegraf"
 	"github.com/influxdata/telegraf/plugins/inputs"
+	"github.com/influxdata/telegraf/internal/errchan"
 	"io"
 	"net"
 	"net/http"
@@ -77,18 +78,19 @@ func (u *Uwsgi) SampleConfig() string {
 
 // Gather collect data from uWSGI Server
 func (u *Uwsgi) Gather(acc telegraf.Accumulator) error {
-	var errs Errors
+	errChan := errchan.New(len(u.Servers))
 	for _, s := range u.Servers {
 		n, err := url.Parse(s)
 		if err != nil {
-			return fmt.Errorf("Could not parse uWSGI Stats Server url '%s': %s", s, err)
+			errChan.C <- fmt.Errorf("Could not parse uWSGI Stats Server url '%s': %s", s, err)
+			continue
 		}
 		if err := u.gatherServer(acc, n); err != nil {
-			errs = append(errs, Errorf(err, "server %s", s))
+			errChan.C <- fmt.Errorf("Error while gathering from server '%s': %s", s, err)
 		}
 
 	}
-	return errs
+	return errChan.Error()
 }
 
 func (u *Uwsgi) gatherServer(acc telegraf.Accumulator, url *url.URL) error {
