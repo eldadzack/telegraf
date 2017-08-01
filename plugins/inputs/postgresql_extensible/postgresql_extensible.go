@@ -272,7 +272,7 @@ COLUMN:
 	for col, val := range columnMap {
 		log.Printf("D! postgresql_extensible: column: %s = %T: %s\n", col, *val, *val)
 		_, ignore := ignoredColumns[col]
-		if ignore || *val == nil {
+		if ignore {
 			continue
 		}
 		for _, tag := range p.AdditionalTags {
